@@ -42,18 +42,28 @@ services:
         networks: 
             - netlearn-symfony
     node-host:
-        build:
-            context: ./node
-            dockerfile: ./Dockerfile
+        image: node:14-alpine
         container_name: node-host
         volumes:
-            - ./node:/home/node/app
-            - node_modules:/home/node/app/node_modules
+            - ./app:/home/node/app
+        working_dir: /home/node/app
         ports: 
             - "5000:5000"
-            - "35729:35729"
         networks:
             - netlearn-symfony
+    # node-host:
+    #     build:
+    #         context: ./node
+    #         dockerfile: ./Dockerfile
+    #     container_name: node-host
+    #     volumes:
+    #         - ./app:/home/node/app
+    #         - node_modules:/home/node/app/node_modules
+    #     ports: 
+    #         - "5000:5000"
+    #         - "35729:35729"
+    #     networks:
+    #         - netlearn-symfony
 networks: 
     netlearn-symfony:
 volumes: 
