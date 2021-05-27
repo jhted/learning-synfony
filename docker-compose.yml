@@ -1,0 +1,59 @@
+version: '3'
+
+services: 
+    nginx-host:
+        image: nginx
+        container_name: nginx-host
+        ports: 
+            - "8080:80"
+        volumes: 
+            - ./app:/var/www/project
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on: 
+            - php-host
+            - mysql-host
+            - node-host
+        networks: 
+            - netlearn-symfony
+    php-host:
+        build:
+            context: .
+            dockerfile: ./php/Dockerfile
+        container_name: php-host
+        ports: 
+            - "9000:9000"
+        volumes: 
+            - ./app:/var/www/project
+        networks: 
+            - netlearn-symfony
+    mysql-host:
+        image: mysql:8
+        container_name: mysql-host
+        ports:
+            - "4306:3306"
+        volumes:
+            - ./mysql:/var/lib/mysql
+        command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        restart: always 
+        environment:
+            MYSQL_USER: admin
+            MYSQL_ROOT_PASSWORD: admin123
+            MYSQL_PASSWORD: admin123
+        networks: 
+            - netlearn-symfony
+    node-host:
+        build:
+            context: ./node
+            dockerfile: ./Dockerfile
+        container_name: node-host
+        volumes:
+            - ./node:/home/node/app
+            - node_modules:/home/node/app/node_modules
+        ports: 
+            - "5000:5000"
+        networks:
+            - netlearn-symfony
+networks: 
+    netlearn-symfony:
+volumes: 
+    node_modules:
