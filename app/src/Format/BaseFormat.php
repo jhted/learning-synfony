@@ -1,11 +1,13 @@
 <?PHP
 
 
-namespace App\format;
+namespace App\Format;
 
-class JSON {
-    private $data;
-    public function __constracter($data)
+abstract class BaseFormat {
+    
+    protected $data;
+    
+    public function __construct($data)
     {
         $this->data = $data;
     }
@@ -16,5 +18,12 @@ class JSON {
     public function setData($data)
     {
         $this->data = $data;
+    }
+    public abstract function convert();
+    // public abstract function convertFromString();
+
+    public function __toString()
+    {
+        return $this->convert();
     }
 }

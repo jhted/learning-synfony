@@ -42,10 +42,10 @@ services:
         networks: 
             - netlearn-symfony
     node-host:
-        image: node:14-alpine
+        image: node:14
         container_name: node-host
         volumes:
-            - ./app:/home/node/app
+            - ./app:/home/node/app:Z
         working_dir: /home/node/app
         ports: 
             - "5000:5000"
