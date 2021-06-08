@@ -12,7 +12,7 @@ services:
         depends_on: 
             - php-host
             - mysql-host
-            - node-host
+            # - node-host
         networks: 
             - netlearn-symfony
     php-host:
@@ -41,16 +41,16 @@ services:
             MYSQL_PASSWORD: admin123
         networks: 
             - netlearn-symfony
-    node-host:
-        image: node:14
-        container_name: node-host
-        volumes:
-            - ./app:/home/node/app:Z
-        working_dir: /home/node/app
-        ports: 
-            - "5000:5000"
-        networks:
-            - netlearn-symfony
+    # node-host:
+    #     image: node:14
+    #     container_name: node-host
+    #     volumes:
+    #         - ./app:/home/node/app:Z
+    #     working_dir: /home/node/app
+    #     ports: 
+    #         - "5000:5000"
+    #     networks:
+    #         - netlearn-symfony
     # node-host:
     #     build:
     #         context: ./node
